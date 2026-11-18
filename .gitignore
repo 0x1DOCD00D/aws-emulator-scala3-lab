@@ -1,0 +1,31 @@
+# Scala / sbt build output (including nested project builds)
+target/
+dist/
+*.class
+*.tasty
+*.log
+
+# Scala tooling
+.bsp/
+.bloop/
+.metals/
+.scala-build/
+.ammonite/
+
+# IDE and editor files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+._*
+
+# Local environment configuration
+.env
+.env.*
+!.env.example
+!.env.sample
