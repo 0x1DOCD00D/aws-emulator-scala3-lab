@@ -1,0 +1,13 @@
+# The pinned Apache Hadoop Docker branch builds FROM apache/hadoop-runner,
+# whose published image is linux/amd64. On Apple Silicon this uses Docker
+# Desktop's x86-64 emulation rather than silently requesting arm64 binaries.
+# This override also works natively on x86-64 Linux/macOS hosts.
+services:
+  namenode:
+    platform: linux/amd64
+  datanode:
+    platform: linux/amd64
+  resourcemanager:
+    platform: linux/amd64
+  nodemanager:
+    platform: linux/amd64
