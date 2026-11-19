@@ -1,33 +1,3 @@
-/*
- * Copyright (c) 2026 Mark Grechanik and Lone Star Consulting, Inc.
- * All rights reserved.
- *
- * Project: aws-emulator-scala3-lab
- * File: HadoopClusterCli.scala
- * Author: Mark Grechanik
- * Date: 2026-11-19
- *
- * PROPRIETARY AND CONFIDENTIAL
- *
- * This software, including its source code, documentation, algorithms,
- * and associated materials, is the intellectual property of
- * Mark Grechanik and Lone Star Consulting, Inc.
- *
- * Unauthorized copying, reproduction, modification, distribution,
- * disclosure, sublicensing, reverse engineering, or commercial use,
- * in whole or in part, is prohibited without prior written permission
- * from the respective copyright holders, except as permitted by
- * applicable law.
- *
- * No license, ownership interest, or other intellectual property
- * rights are granted except as expressly authorized in writing.
- *
- * ALL SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
- */
-
-
 package edu.cs441.hadoop.cluster
 
 import java.nio.file.{Files, Path, Paths}
@@ -164,7 +134,6 @@ object HadoopClusterCli:
           s3.close()
           // Temporary host-side payloads can contain source material: delete them.
           val files = Files.walk(tempDir)
-          try files.iterator().asScala.toVector.sortBy(_.getNameCount).reverse.foreach(Files.deleteIfExists)
           finally files.close()
 
       case _ =>

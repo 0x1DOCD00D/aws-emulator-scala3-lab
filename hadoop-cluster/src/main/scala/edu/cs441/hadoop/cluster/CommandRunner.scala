@@ -1,33 +1,3 @@
-/*
- * Copyright (c) 2026 Mark Grechanik and Lone Star Consulting, Inc.
- * All rights reserved.
- *
- * Project: aws-emulator-scala3-lab
- * File: CommandRunner.scala
- * Author: Mark Grechanik
- * Date: 2026-11-19
- *
- * PROPRIETARY AND CONFIDENTIAL
- *
- * This software, including its source code, documentation, algorithms,
- * and associated materials, is the intellectual property of
- * Mark Grechanik and Lone Star Consulting, Inc.
- *
- * Unauthorized copying, reproduction, modification, distribution,
- * disclosure, sublicensing, reverse engineering, or commercial use,
- * in whole or in part, is prohibited without prior written permission
- * from the respective copyright holders, except as permitted by
- * applicable law.
- *
- * No license, ownership interest, or other intellectual property
- * rights are granted except as expressly authorized in writing.
- *
- * ALL SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
- */
-
-
 package edu.cs441.hadoop.cluster
 
 import java.io.ByteArrayOutputStream
@@ -61,18 +31,20 @@ object CommandRunner:
     val output = new ByteArrayOutputStream()
     val maximumBytes = 2 * 1024 * 1024
     val collector = new Thread(
-      () => {
-        val input = child.getInputStream
-        val chunk = new Array[Byte](8192)
-        try {
-          var read = input.read(chunk)
-          while (read >= 0) {
-            val remaining = maximumBytes - output.size()
-            if (remaining > 0 && read > 0)
-              output.write(chunk, 0, math.min(read, remaining))
-            read = input.read(chunk)
-          }
-        } finally input.close()
+      new Runnable {
+        override def run(): Unit = {
+          val input = child.getInputStream
+          val chunk = new Array[Byte](8192)
+          try {
+            var read = input.read(chunk)
+            while (read >= 0) {
+              val remaining = maximumBytes - output.size()
+              if (remaining > 0 && read > 0)
+                output.write(chunk, 0, math.min(read, remaining))
+              read = input.read(chunk)
+            }
+          } finally input.close()
+        }
       },
       "cs441-process-output"
     )
